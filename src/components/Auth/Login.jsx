@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { loginUser } from '../../services/auth'
+import { api } from '../../services/api'
+import { toast } from 'react-hot-toast'
 
 function Login() {
   const { setUser, setError } = useAuth()
@@ -42,8 +44,10 @@ function Login() {
       localStorage.setItem('token', response.accessToken)
       localStorage.setItem('refreshToken', response.refreshToken)
       setUser(response.user)
+      toast.success('Successfully logged in!')
     } catch (err) {
       setError(err.message || 'Login failed')
+      toast.error(err.message || 'Login failed')
       setFormErrors({})
     } finally {
       setLoading(false)

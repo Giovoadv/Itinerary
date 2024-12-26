@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { api } from '../../services/api';
 
 function Register({ onRegisterSuccess }) {
   const [formData, setFormData] = useState({
@@ -11,11 +12,9 @@ function Register({ onRegisterSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+      const response = await fetch(`${api.baseURL}/auth/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: api.headers,
         body: JSON.stringify(formData),
       });
       const data = await response.json();

@@ -1,9 +1,10 @@
-const API_URL = import.meta.env.VITE_API_URL;
+import { api } from './api';
 
 export async function fetchTasks() {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/tasks`, {
+  const response = await fetch(`${api.baseURL}/tasks`, {
     headers: {
+      ...api.headers,
       'Authorization': `Bearer ${token}`
     }
   });
@@ -13,10 +14,10 @@ export async function fetchTasks() {
 
 export async function createTask(task) {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/tasks`, {
+  const response = await fetch(`${api.baseURL}/tasks`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      ...api.headers,
       'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify(task)
@@ -27,10 +28,10 @@ export async function createTask(task) {
 
 export async function updateTask(id, task) {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/tasks/${id}`, {
+  const response = await fetch(`${api.baseURL}/tasks/${id}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      ...api.headers,
       'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify(task)
@@ -41,9 +42,10 @@ export async function updateTask(id, task) {
 
 export async function deleteTask(id) {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${API_URL}/tasks/${id}`, {
+  const response = await fetch(`${api.baseURL}/tasks/${id}`, {
     method: 'DELETE',
     headers: {
+      ...api.headers,
       'Authorization': `Bearer ${token}`
     }
   });
