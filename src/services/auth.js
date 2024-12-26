@@ -1,63 +1,63 @@
-const API_URL = import.meta.env.VITE_API_URL
+import { api } from './api';
 
 export async function loginUser(credentials) {
   try {
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch(`${api.baseURL}/auth/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        ...api.headers,
       },
       body: JSON.stringify(credentials),
-    })
+    });
 
     if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.message || 'Login failed')
+      const error = await response.json();
+      throw new Error(error.message || 'Login failed');
     }
 
-    return response.json()
+    return response.json();
   } catch (error) {
-    throw new Error(error.message || 'Network error')
+    throw new Error(error.message || 'Network error');
   }
 }
 
 export async function refreshTokens(refreshToken) {
   try {
-    const response = await fetch(`${API_URL}/auth/refresh`, {
+    const response = await fetch(`${api.baseURL}/auth/refresh`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        ...api.headers,
       },
       body: JSON.stringify({ refreshToken }),
-    })
+    });
 
     if (!response.ok) {
-      throw new Error('Token refresh failed')
+      throw new Error('Token refresh failed');
     }
 
-    return response.json()
+    return response.json();
   } catch (error) {
-    throw new Error(error.message || 'Network error')
+    throw new Error(error.message || 'Network error');
   }
 }
 
 export async function requestPasswordReset(email) {
   try {
-    const response = await fetch(`${API_URL}/auth/forgot-password`, {
+    const response = await fetch(`${api.baseURL}/auth/forgot-password`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        ...api.headers,
       },
       body: JSON.stringify({ email }),
-    })
+    });
 
     if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.message || 'Password reset request failed')
+      const error = await response.json();
+      throw new Error(error.message || 'Password reset request failed');
     }
 
-    return response.json()
+    return response.json();
   } catch (error) {
-    throw new Error(error.message || 'Network error')
+    throw new Error(error.message || 'Network error');
   }
 } 
