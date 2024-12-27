@@ -138,4 +138,24 @@ router.post('/refresh', async (req, res) => {
   }
 });
 
+// Password Reset Request
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    
+    if (!user) {
+      // For security reasons, don't reveal if user exists
+      return res.json({ message: 'If an account exists, a password reset email will be sent.' });
+    }
+
+    // TODO: Implement actual email sending logic
+    // For now, just return success message
+    res.json({ message: 'If an account exists, a password reset email will be sent.' });
+  } catch (error) {
+    console.error('Password reset error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 export default router; 

@@ -1,54 +1,50 @@
 import { api } from './api';
 
-export async function fetchTasks() {
+const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
+  return {
+    ...api.headers,
+    'Authorization': `Bearer ${token}`
+  };
+};
+
+export async function fetchTasks() {
   const response = await fetch(`${api.baseURL}/tasks`, {
-    headers: {
-      ...api.headers,
-      'Authorization': `Bearer ${token}`
-    }
+    headers: getAuthHeaders()
   });
-  if (!response.ok) throw new Error('Failed to fetch tasks');
-  return response.json();
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Failed to fetch tasks');
+  return data;
 }
 
 export async function createTask(task) {
-  const token = localStorage.getItem('token');
   const response = await fetch(`${api.baseURL}/tasks`, {
     method: 'POST',
-    headers: {
-      ...api.headers,
-      'Authorization': `Bearer ${token}`
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(task)
   });
-  if (!response.ok) throw new Error('Failed to create task');
-  return response.json();
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Failed to create task');
+  return data;
 }
 
 export async function updateTask(id, task) {
-  const token = localStorage.getItem('token');
   const response = await fetch(`${api.baseURL}/tasks/${id}`, {
     method: 'PUT',
-    headers: {
-      ...api.headers,
-      'Authorization': `Bearer ${token}`
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(task)
   });
-  if (!response.ok) throw new Error('Failed to update task');
-  return response.json();
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Failed to update task');
+  return data;
 }
 
 export async function deleteTask(id) {
-  const token = localStorage.getItem('token');
   const response = await fetch(`${api.baseURL}/tasks/${id}`, {
     method: 'DELETE',
-    headers: {
-      ...api.headers,
-      'Authorization': `Bearer ${token}`
-    }
+    headers: getAuthHeaders()
   });
-  if (!response.ok) throw new Error('Failed to delete task');
-  return response.json();
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Failed to delete task');
+  return data;
 } 

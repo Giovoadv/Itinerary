@@ -1,0 +1,28 @@
+services:
+  # Backend API Service
+  - type: web
+    name: itinerary-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: REFRESH_TOKEN_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://itinerary-frontend.onrender.com
+
+  # Frontend Static Site
+  - type: web
+    name: itinerary-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://itinerary-backend.onrender.com/api 
