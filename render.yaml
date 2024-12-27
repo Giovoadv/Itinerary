@@ -25,4 +25,8 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
-        value: https://itinerary-backend.onrender.com/api 
+        value: https://itinerary-backend.onrender.com/api
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache 
