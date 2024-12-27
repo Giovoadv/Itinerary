@@ -5,14 +5,15 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import taskRoutes from './routes/tasks.js';
 
-const app = express();
 dotenv.config();
+const app = express();
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // CORS configuration
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
-  'http://localhost:5173',
-  'https://itinerary-frontend.onrender.com'
-];
+const allowedOrigins = isDevelopment 
+  ? ['http://localhost:5173']
+  : [process.env.VITE_FRONTEND_URL];
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -33,7 +34,11 @@ app.use(express.json());
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ 
+    status: 'ok',
+    environment: process.env.NODE_ENV,
+    allowedOrigins
+  });
 });
 
 // Routes

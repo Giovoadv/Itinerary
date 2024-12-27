@@ -1,7 +1,7 @@
 services:
   # Backend API Service
   - type: web
-    name: itinerary-backend
+    name: itinerary-server
     env: node
     buildCommand: npm install
     startCommand: node server/server.js
@@ -14,18 +14,18 @@ services:
         sync: false
       - key: REFRESH_TOKEN_SECRET
         sync: false
-      - key: ALLOWED_ORIGINS
-        value: https://itinerary-frontend.onrender.com
+      - key: VITE_FRONTEND_URL
+        value: https://itinerary-paoj.onrender.com
 
   # Frontend Static Site
   - type: web
-    name: itinerary-frontend
+    name: itinerary-paoj
     env: static
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     envVars:
-      - key: VITE_API_URL
-        value: https://itinerary-backend.onrender.com/api
+      - key: VITE_BACK_END_URL
+        value: https://itinerary-server.onrender.com
     headers:
       - path: /*
         name: Cache-Control

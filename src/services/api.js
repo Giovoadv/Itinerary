@@ -1,8 +1,11 @@
-// Remove localhost fallback in production
-const API_URL = import.meta.env.VITE_API_URL;
+const isDevelopment = import.meta.env.MODE === 'development';
+
+const API_URL = isDevelopment 
+  ? 'http://localhost:5000/api'
+  : import.meta.env.VITE_BACK_END_URL + '/api';
 
 if (!API_URL) {
-  console.error('VITE_API_URL environment variable is not set');
+  console.error('API URL is not set');
 }
 
 export const api = {
