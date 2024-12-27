@@ -40,11 +40,25 @@ export async function updateTask(id, task) {
 }
 
 export async function deleteTask(id) {
-  const response = await fetch(`${api.baseURL}/tasks/${id}`, {
-    method: 'DELETE',
-    headers: getAuthHeaders()
-  });
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.message || 'Failed to delete task');
-  return data;
+  if (!id) {
+    throw new Error('Task ID is required');
+  }
+
+  try {
+    const response = await fetch(`${api.baseURL}/tasks/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to delete task');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Delete task error:', error);
+    throw error;
+  }
 } 

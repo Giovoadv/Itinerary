@@ -43,8 +43,9 @@ function Login() {
       const response = await loginUser(formData)
       localStorage.setItem('token', response.accessToken)
       localStorage.setItem('refreshToken', response.refreshToken)
+      localStorage.setItem('user', JSON.stringify(response.user))
       setUser(response.user)
-      toast.success('Successfully logged in!')
+      toast.success('Welcome back!')
     } catch (err) {
       setError(err.message || 'Login failed')
       toast.error(err.message || 'Login failed')

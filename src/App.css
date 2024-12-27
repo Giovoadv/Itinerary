@@ -13,22 +13,22 @@ body {
 }
 
 #root {
-  width: min(1280px, 100% - 2rem);
+  width: min(1280px, 100% - 1rem);
   margin-inline: auto;
-  padding: clamp(1rem, 2vw, 2rem);
+  padding: clamp(0.5rem, 2vw, 2rem);
   min-height: 100vh;
 }
 
 .itinerary-app {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: clamp(1rem, 3vw, 2rem);
   background: rgba(30, 41, 59, 0.85);
   backdrop-filter: blur(8px);
   border: none;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
   color: #e2e8f0;
 }
 
@@ -38,26 +38,26 @@ body {
 
 .app-header h1 {
   color: #f1f5f9;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   margin-bottom: 1.5rem;
   font-weight: 700;
 }
 
 .view-controls {
   display: flex;
-  gap: 0.5rem;
+  gap: clamp(0.25rem, 1vw, 0.5rem);
   justify-content: center;
   margin-top: 1rem;
   background: rgba(51, 65, 85, 0.8);
   backdrop-filter: blur(4px);
-  padding: 0.5rem;
+  padding: clamp(0.25rem, 1vw, 0.5rem);
   border-radius: 12px;
-  width: fit-content;
+  width: min(100%, 400px);
   margin: 0 auto;
 }
 
 .view-controls button {
-  padding: clamp(0.5rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.75rem, 2vw, 1.5rem);
   border-radius: clamp(6px, 1vw, 12px);
   border: none;
   background-color: transparent;
@@ -65,6 +65,7 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 500;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .view-controls button:hover {
@@ -113,6 +114,7 @@ body {
 @media (min-width: 768px) {
   .calendar-container {
     grid-template-columns: 2fr 1fr;
+    gap: clamp(1rem, 3vw, 2rem);
   }
 }
 
@@ -122,7 +124,7 @@ body {
   border: none;
   border-radius: 12px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  padding: 1.5rem;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
   color: #e2e8f0;
 }
 
@@ -149,7 +151,7 @@ body {
 }
 
 .calendar-header h3 {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   font-weight: 600;
   color: #f1f5f9;
 }
@@ -157,7 +159,7 @@ body {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: clamp(4px, 1vw, 8px);
+  gap: clamp(2px, 1vw, 8px);
 }
 
 .calendar-day-header {
@@ -165,7 +167,7 @@ body {
   font-weight: 600;
   padding: 0.75rem;
   color: #94a3b8;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 }
 
 .calendar-day {
@@ -175,7 +177,7 @@ body {
   justify-content: center;
   border-radius: 8px;
   cursor: pointer;
-  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
   transition: all 0.2s;
   border: 2px solid transparent;
   background: rgba(51, 65, 85, 0.5);
@@ -218,7 +220,7 @@ body {
 }
 
 .task-header h3 {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   font-weight: 600;
   color: #334155;
   margin: 0;
@@ -269,7 +271,7 @@ body {
 .task-content p {
   margin: 0;
   color: #cbd5e1;
-  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
 }
 
 .task-actions {
@@ -327,9 +329,9 @@ body {
   backdrop-filter: blur(8px);
   border: none;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
   border-radius: 16px;
-  width: min(500px, 95%);
+  width: min(95%, 500px);
   max-width: 500px;
   color: #e2e8f0;
 }
@@ -349,10 +351,10 @@ body {
 
 .modal-content input,
 .modal-content textarea {
-  padding: 0.75rem;
+  padding: clamp(0.5rem, 1.5vw, 1rem);
   border: 1px solid rgba(71, 85, 105, 0.3);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   transition: all 0.2s;
   background: rgba(51, 65, 85, 0.8);
   color: #f1f5f9;
@@ -471,8 +473,8 @@ body {
 }
 
 .auth-form {
-  width: min(400px, 100%);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
+  width: min(95%, 400px);
+  padding: clamp(1rem, 3vw, 2rem);
   margin: 1rem;
   background: rgba(30, 41, 59, 0.95);
   border-radius: clamp(12px, 2vw, 16px);
@@ -492,11 +494,11 @@ body {
 
 .auth-form input {
   width: 90%;
-  padding: 1rem;
+  padding: clamp(0.75rem, 1.5vw, 1rem);
   margin-bottom: 0.5rem;
   border: 2px solid rgba(71, 85, 105, 0.3);
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   transition: all 0.3s ease;
   background: rgba(51, 65, 85, 0.8);
   color: #f1f5f9;
@@ -609,12 +611,14 @@ body {
   }
 
   .task-actions {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
 
   .task-actions button {
-    width: 100%;
+    flex: 1;
+    min-width: 120px;
   }
 
   .modal-actions {
@@ -659,11 +663,11 @@ body {
 
 /* Maintain readability */
 .task-content h4 {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-size: clamp(0.875rem, 2vw, 1rem);
 }
 
 .task-content p {
-  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
 }
 
 /* Improve touch targets on mobile */
@@ -675,3 +679,56 @@ body {
     min-width: 44px;
   }
 }
+
+/* Tablet specific adjustments */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .task-actions {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .task-actions button {
+    flex: 1;
+    min-width: 100px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  button,
+  .calendar-day,
+  .task-item {
+    min-height: 44px;
+  }
+}
+
+/* Maintain visual hierarchy */
+.header-content,
+.calendar-header,
+.task-header {
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+/* Ensure proper spacing */
+.task-list {
+  gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* Auth forms responsive */
+.auth-form {
+  width: min(95%, 400px);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.auth-form input {
+  padding: clamp(0.75rem, 1.5vw, 1rem);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+}
+
+/* Maintain animations and transitions */
+.task-item:hover,
+.calendar-day:hover,
+button:hover {
+  transition: all 0.2s ease;
+}
+

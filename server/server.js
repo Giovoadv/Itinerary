@@ -51,6 +51,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
+// Add this after your existing middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`, {
+    body: req.body,
+    query: req.query,
+    params: req.params,
+    userId: req?.user?.userId
+  });
+  next();
+});
+
 const PORT = process.env.PORT || 5000;
 
 // Improved MongoDB connection with retry logic

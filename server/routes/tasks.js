@@ -47,16 +47,49 @@ router.put('/:id', authenticateToken, async (req, res) => {
 
 // Delete a task
 router.delete('/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  
+  console.log('Delete request received for task:', id);
+  console.log('User ID:', req.user.userId);
+  
+  if (!id) {
+    return res.status(400).json({ message: 'Task ID is required' });
+  }
+
   try {
-    const task = await Task.findOneAndDelete({
-      _id: req.params.id,
+    // Verify the task exists and belongs to the user before deletion
+    const taskToDelete = await Task.findOne({
+      _id: id,
       userId: req.user.userId
     });
-    if (!task) {
+
+    console.log('Task to delete:', taskToDelete);
+
+    if (!taskToDelete) {
+      return res.status(404).json({ message: 'Task not found or unauthorized' });
+    }
+
+    // Delete the task
+    const deletedTask = await Task.findOneAndDelete({
+      _id: id,
+      userId: req.user.userId
+    });
+
+    console.log('Deleted task:', deletedTask);
+
+    if (!deletedTask) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    res.json({ message: 'Task deleted' });
+
+    res.json({ 
+      message: 'Task deleted successfully', 
+      task: deletedTask 
+    });
   } catch (error) {
+    console.error('Delete task error:', error);
+    if (error.name === 'CastError') {
+      return res.status(400).json({ message: 'Invalid task ID format' });
+    }
     res.status(500).json({ message: 'Error deleting task' });
   }
 });

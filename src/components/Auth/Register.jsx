@@ -19,7 +19,7 @@ function Register({ onRegisterSuccess }) {
       });
       const data = await response.json();
       if (response.ok) {
-        toast.success('Registration successful!');
+        toast.success('Account created successfully!');
         onRegisterSuccess();
       } else {
         toast.error(data.message || 'Registration failed');

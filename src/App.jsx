@@ -6,6 +6,8 @@ import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { fetchTasks, createTask, updateTask, deleteTask } from './services/tasks'
+import { toast } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 function AppContent() {
   const { user, loading, logout } = useAuth()
@@ -50,8 +52,10 @@ function AppContent() {
       setTasks(tasks.map(task => 
         task._id === taskId ? { ...savedTask, date: new Date(savedTask.date) } : task
       ))
+      toast.success('Task updated successfully')
     } catch (error) {
       console.error('Failed to update task:', error)
+      toast.error(error.message || 'Failed to update task')
     }
   }
 
@@ -59,8 +63,10 @@ function AppContent() {
     try {
       await deleteTask(taskId)
       setTasks(tasks.filter(task => task._id !== taskId))
+      toast.success('Task deleted successfully')
     } catch (error) {
       console.error('Failed to delete task:', error)
+      toast.error(error.message || 'Failed to delete task')
     }
   }
 
@@ -142,6 +148,16 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#1e293b',
+            color: '#f8fafc',
+          },
+        }}
+      />
       <AppContent />
     </AuthProvider>
   )

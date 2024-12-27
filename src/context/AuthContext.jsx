@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { refreshTokens } from '../services/auth'
+import { toast } from 'react-hot-toast'
 
 const AuthContext = createContext(null)
 
@@ -16,13 +16,8 @@ export function AuthProvider({ children }) {
     try {
       const token = localStorage.getItem('token')
       if (token) {
-        // Verify token and refresh if needed
-        const refreshToken = localStorage.getItem('refreshToken')
-        const response = await refreshTokens(refreshToken)
-        if (response.accessToken) {
-          localStorage.setItem('token', response.accessToken)
-          setUser(response.user)
-        }
+        const user = JSON.parse(localStorage.getItem('user'))
+        setUser(user)
       }
     } catch (err) {
       console.error('Auth check failed:', err)
@@ -35,7 +30,9 @@ export function AuthProvider({ children }) {
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
+    localStorage.removeItem('user')
     setUser(null)
+    toast.success('Successfully logged out!')
   }
 
   const value = {

@@ -12,9 +12,9 @@ function TaskManager({ selectedDate, tasks, onAddTask, onEditTask, onDeleteTask 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (editingTask) {
-      onEditTask(editingTask.id, { ...taskForm, date: selectedDate })
+      onEditTask(editingTask._id, { ...taskForm, date: selectedDate })
     } else {
-      onAddTask({ ...taskForm, date: selectedDate, id: Date.now() })
+      onAddTask({ ...taskForm, date: selectedDate })
     }
     setIsModalOpen(false)
     setEditingTask(null)
@@ -31,6 +31,16 @@ function TaskManager({ selectedDate, tasks, onAddTask, onEditTask, onDeleteTask 
     setIsModalOpen(true)
   }
 
+  const handleDelete = async (taskId) => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      try {
+        await onDeleteTask(taskId);
+      } catch (error) {
+        console.error('Delete task error:', error);
+      }
+    }
+  };
+
   const filteredTasks = tasks.filter(
     task => task.date.toDateString() === selectedDate.toDateString()
   )
@@ -44,7 +54,7 @@ function TaskManager({ selectedDate, tasks, onAddTask, onEditTask, onDeleteTask 
 
       <div className="tasks-list">
         {filteredTasks.map(task => (
-          <div key={task.id} className="task-item">
+          <div key={task._id} className="task-item">
             <div className="task-content">
               <h4>{task.title}</h4>
               <p>{task.description}</p>
@@ -52,7 +62,7 @@ function TaskManager({ selectedDate, tasks, onAddTask, onEditTask, onDeleteTask 
             </div>
             <div className="task-actions">
               <button onClick={() => handleEdit(task)}>Edit</button>
-              <button onClick={() => onDeleteTask(task.id)}>Delete</button>
+              <button onClick={() => handleDelete(task._id)} className="delete-button">Delete</button>
             </div>
           </div>
         ))}
